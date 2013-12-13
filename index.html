@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>TEST taxes.js</title>
+        <script type="text/javascript" src="/bibliotecatelco/static/js/taxes/taxes.app.js"></script>
+    </head>
+    <body>
+        <form>
+            IVA <input type="text" id="iva" disabled="disabled"/>%<br>
+            Precio sin IVA <input type="text" id="sinIVA" /><br>
+            Precio con IVA <input type="text" id="conIVA" /><br><br>
+            <input type="button" id="calcBtn" value="Calcular" />
+        </form>
+        <script type="text/javascript">
+            var objTaxes = new TaxesApp();
+            function calc() {
+                var sin = document.getElementById( "sinIVA" ).value;
+                var con = document.getElementById( "conIVA" ).value;
+                var iva = document.getElementById( "iva" ).value;
+
+                if ( sin == "" && con != "" ) { 
+                    document.getElementById( "sinIVA" ).value = objTaxes.withoutVAT( con ); 
+                    document.getElementById( "iva" ).value = objTaxes.getVAT(); 
+                } 
+                if ( sin != "" && con == "" ) { 
+                    document.getElementById( "conIVA" ).value = objTaxes.addVAT( sin );
+                    document.getElementById( "iva" ).value = objTaxes.getVAT(); 
+                } 
+                if ( sin != "" && con != "" ) {
+                    document.getElementById( "iva" ).value = objTaxes.getVAT( con, sin );
+                }
+            }            
+
+            document.getElementById( "calcBtn" ).onclick = function() { calc(); }
+        </script> 
+
+    </body>
+</html>
