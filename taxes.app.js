@@ -47,7 +47,7 @@ TaxesApp = (function (){
   TaxesApp.prototype.show = function( val ) {
     val = new String( val );
     var l = val.length;
-    return String( "0" + val.substr( 0, l-this.numOfDec ) ).slice( -1 ) + "," + String( "00" + val.substr( val.length - this.numOfDec, val.length ) ).slice(-2);
+    return String( "0" + val.substr( 0, l-this.numOfDec ) ).slice( -l+this.numOfDec ) + "," + String( "00" + val.substr( val.length - this.numOfDec, val.length ) ).slice(-2);
   }
 
   return TaxesApp;
