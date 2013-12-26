@@ -35,7 +35,7 @@ Devuelve el % de impuesto a partir de los valores dados
 Demo:
 --------
 
-http://canguro.orangix/bibliotecatelco/static/js/taxes/
+http://manufosela.es/examples/taxes/
 
 
 ============================================================================================
@@ -75,4 +75,4 @@ Returns the % of tax from the values ​​given
 Demo:
 --------
 
-http://canguro.orangix/bibliotecatelco/static/js/taxes/
+http://manufosela.es/examples/taxes/
