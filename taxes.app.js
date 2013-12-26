@@ -9,34 +9,41 @@ TaxesApp = (function (){
     this.dec = parseInt( "1" + new Array( this.numOfDec + 1 ).join( "0" ) );
   };
 
+  TaxesApp.prototype.setNumOfDec = function( numOfDec ) {
+    this.numOfDec = numOfDec;
+    this.dec = parseInt( "1" + new Array( this.numOfDec + 1 ).join( "0" ) );
+  }
+
   TaxesApp.prototype.addVAT = function( val ) {
+    var newVal;
     try {
-      val = parseFloat( new String(val).replace( ",", "." ) );
-      var newval = Math.ceil(  val * this.dec * this.VAT );
+      val = parseFloat( new String( val ).replace( ",", "." ) );
+      newVal = Math.ceil(  val * this.dec * this.VAT );
     } catch( e  ) {
-      var newVal = -9999;
+      newVal = -9999;
     }
-  	return this.show( newval );
+  	return this.show( newVal );
   };
 
 	TaxesApp.prototype.withoutVAT = function( val ) {
+    var newVal;
     try {
 		  val = parseFloat( new String( val ).replace( ",", "." ) );
-      var newVal =  Math.floor( val * this.dec / this.VAT );
+      newVal =  Math.floor( val * this.dec / this.VAT );
     } catch( e  ) {
-      var newVal = -9999;
+      newVal = -9999;
     }
     return this.show( newVal );
   }; 
 
-  TaxesApp.prototype.getVAT = function( valW, valWO ) {
+  TaxesApp.prototype.getVAT = function( valWithVAT, valWithoutVAT ) {
     try {    
-      if ( typeof valW == "undefined" && typeof valWO == "undefined" ) {
+      if ( typeof valWithVAT == "undefined" && typeof valWithoutVAT == "undefined" ) {
         var newVal = Math.ceil( ( this.VAT - 1 ) * this.dec );
       } else {
-        valW = parseFloat( new String( valW ).replace( ",", "." ) );
-        valWO = parseFloat( new String( valWO ).replace( ",", "." ) );
-        var newVal = Math.ceil( ( ( valW / valWO ) - 1 ) * this.dec ); 
+        valWithVAT = parseFloat( new String( valWithVAT ).replace( ",", "." ) );
+        valWithoutVAT = parseFloat( new String( valWithoutVAT ).replace( ",", "." ) );
+        var newVal = Math.ceil( ( ( valWithVAT / valWithoutVAT ) - 1 ) * 100 ); 
       }
     } catch( e  ) {
       var newVal = -9999;
@@ -45,9 +52,13 @@ TaxesApp = (function (){
   };
 
   TaxesApp.prototype.show = function( val ) {
+    console.log( val );
+    if ( val == -9999 || isNaN( val ) ) return "ERR";
     val = new String( val );
-    var l = val.length;
-    return String( "0" + val.substr( 0, l-this.numOfDec ) ).slice( -l+this.numOfDec ) + "," + String( "00" + val.substr( val.length - this.numOfDec, val.length ) ).slice(-2);
+    var l = val.length,
+        zeros = Array( this.numOfDec + 1 ).join( "0" );
+    l = ( l < ( this.numOfDec + 1 ) )?this.numOfDec + 1:l;
+    return String( "0" + val.substr( 0, l-this.numOfDec ) ).slice( -l+this.numOfDec ) + "," + String( zeros + val.substr( l - this.numOfDec, l ) ).slice( -this.numOfDec );
   }
 
   return TaxesApp;
