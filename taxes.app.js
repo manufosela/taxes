@@ -1,4 +1,4 @@
-/* author: @manufosela - v1.0 26/11/2013 */
+/* author: @manufosela - v1.0 26/11/2013 v1.1 26/12/2013 */
 TaxesApp = (function (){
 
   "use strict";
